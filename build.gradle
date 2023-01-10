@@ -1,0 +1,74 @@
+buildscript {
+	repositories {
+		mavenLocal()
+	}
+	dependencies {
+		classpath "com.bertramlabs.plugins:asset-pipeline-gradle:$assetPipelineVersion"
+	}
+}
+
+plugins {
+    id 'groovy'
+    id 'java'
+	id 'idea'
+	id 'com.github.johnrengelman.shadow'
+	id 'maven-publish'
+}
+
+apply plugin: 'asset-pipeline'
+
+group 'com.morpheusdata.support'
+version '1.0.0'
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+}
+
+sourceCompatibility = '1.11'
+targetCompatibility = '1.11'
+
+configurations {
+	provided
+}
+
+dependencies {
+	provided project(':morpheus-plugin-api')
+	implementation "org.codehaus.groovy:groovy-all:$groovyVersion"
+	implementation "org.slf4j:slf4j-api:$slf4jVersion"
+	implementation "org.slf4j:slf4j-parent:$slf4jVersion"
+	implementation 'org.apache.httpcomponents:httpclient:4.5.3'
+	implementation 'org.apache.httpcomponents:httpcore:4.4.5'
+}
+
+sourceSets {
+	main {
+		compileClasspath += configurations.provided
+	}
+}
+
+jar {
+	manifest {
+		attributes(
+				'Plugin-Class': 'com.morpheusdata.support.ExampleOptionSourcePlugin',
+				'Plugin-Version': archiveVersion.get()
+		)
+	}
+}
+
+java {
+	withSourcesJar()
+	withJavadocJar()
+}
+
+task(console, dependsOn: 'classes', type: JavaExec) {
+	main = 'groovy.ui.Console'
+	classpath = sourceSets.main.runtimeClasspath
+}
+
+tasks.withType(com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar) {
+	destinationDirectory = file("$rootDir/plugins")
+}
+
+tasks.assemble.dependsOn tasks.shadowJar
