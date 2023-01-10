@@ -1,4 +1,4 @@
-package com.morpheusdata.support
+package com.morpheusdata.support.util
 import groovy.json.JsonBuilder
 import groovy.util.logging.Slf4j
 
@@ -6,7 +6,7 @@ import groovy.util.logging.Slf4j
 A class to represent a JSON REST API. This acts like an REST API purely for convenience purposes and to ensure the example can be widely used.
 **/
 @Slf4j
-class DummyJsonApi {
+public class DummyJsonApi {
   
   static final MATRIX_FILMS = [
     [id: 1, title: "The Matrix"],
@@ -34,12 +34,12 @@ class DummyJsonApi {
     [id: 10, character: 6, name: "Making keys..", films: [2]],
   ]
   
-  static getMatrixFilms(query = [:]) {
+  public static getMatrixFilms(query = [:]) {
     log.debug("DummyJsonApi getMatrixFilms: ${query}")
     return toJSON(MATRIX_FILMS)
   }
   
-  static getMatrixCharacters(query = [:]) {
+  public static getMatrixCharacters(query = [:]) {
     log.debug("DummyJsonApi getMatrixCharacters: ${query}")
     def rtn = CHARACTERS
     if (query.filmId) {
@@ -48,7 +48,7 @@ class DummyJsonApi {
     return toJSON(rtn)
   }
   
-  static getMatrixSpecialMoves(query = [:]) {
+  public static getMatrixSpecialMoves(query = [:]) {
     log.debug("DummyJsonApi getMatrixSpecialMoves: ${query}")
     def rtn = SPECIAL_MOVES
     if (query.filmId) {
@@ -61,6 +61,6 @@ class DummyJsonApi {
   }
   
   private static toJSON(obj) {
-    return new JsonBuilder(obj)
+    return new JsonBuilder(obj)?.toString()
   } 
 }

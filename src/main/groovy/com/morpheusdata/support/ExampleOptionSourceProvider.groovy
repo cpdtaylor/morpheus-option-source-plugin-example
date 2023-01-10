@@ -6,6 +6,7 @@ import com.morpheusdata.model.*
 import groovy.util.logging.Slf4j
 import com.morpheusdata.core.OptionSourceProvider
 import groovy.json.JsonSlurper
+import com.morpheusdata.support.util.DummyJsonApi
 
 @Slf4j
 class ExampleOptionSourceProvider implements OptionSourceProvider {
@@ -45,17 +46,17 @@ class ExampleOptionSourceProvider implements OptionSourceProvider {
 	
 	def matrixFilms(args) {
 		log.debug("ExampleOptionSourceProvider matrixFilms: ${args}")
-		return this.parseJSON(DummyJsonAPI.getMatrixFilms())
+		return this.parseJSON(DummyJsonApi.getMatrixFilms())
 	}
 	
 	def matrixCharacters(args) {
 		log.debug("ExampleOptionSourceProvider matrixCharacters: ${args}")
-		return this.parseJSON(DummyJsonAPI.getMatrixCharacters())
+		return this.parseJSON(DummyJsonApi.getMatrixCharacters())
 	}
 	
 	def matrixSpecialMoves(args) {
 		log.debug("ExampleOptionSourceProvider matrixSpecialMoves: ${args}")
-		return this.parseJSON(DummyJsonAPI.getMatrixCharacters())
+		return this.parseJSON(DummyJsonApi.getMatrixCharacters())
 	}
 	
 	private parseJSON(json) {
