@@ -44,17 +44,17 @@ class ExampleOptionSourceProvider implements OptionSourceProvider {
 	}
 	
 	def matrixFilms(args) {
-		log.debug "ExampleOptionSourceProvider matrixFilms: ${args}"
+		log.debug("ExampleOptionSourceProvider matrixFilms: ${args}")
 		return this.parseJSON(DummyJsonAPI.getMatrixFilms())
 	}
 	
 	def matrixCharacters(args) {
-		log.debug "ExampleOptionSourceProvider matrixCharacters: ${args}"
+		log.debug("ExampleOptionSourceProvider matrixCharacters: ${args}")
 		return this.parseJSON(DummyJsonAPI.getMatrixCharacters())
 	}
 	
 	def matrixSpecialMoves(args) {
-		log.debug "ExampleOptionSourceProvider matrixSpecialMoves: ${args}"
+		log.debug("ExampleOptionSourceProvider matrixSpecialMoves: ${args}")
 		return this.parseJSON(DummyJsonAPI.getMatrixCharacters())
 	}
 	

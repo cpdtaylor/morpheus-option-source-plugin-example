@@ -5,8 +5,8 @@ import groovy.util.logging.Slf4j
 /**
 A class to represent a JSON REST API. This acts like an REST API purely for convenience purposes and to ensure the example can be widely used.
 **/
-Slf4j
-static class DummyJsonApi {
+@Slf4j
+class DummyJsonApi {
   
   static final MATRIX_FILMS = [
     [id: 1, title: "The Matrix"],
@@ -35,12 +35,12 @@ static class DummyJsonApi {
   ]
   
   static getMatrixFilms(query = [:]) {
-    log.debug "DummyJsonApi getMatrixFilms: ${query}"
+    log.debug("DummyJsonApi getMatrixFilms: ${query}")
     return toJSON(MATRIX_FILMS)
   }
   
   static getMatrixCharacters(query = [:]) {
-    log.debug "DummyJsonApi getMatrixCharacters: ${query}"
+    log.debug("DummyJsonApi getMatrixCharacters: ${query}")
     def rtn = CHARACTERS
     if (query.filmId) {
       rtn = rtn?.findResults { it.films?.find{it?.toString()?.equals(query.filmId?.toString())}}
@@ -49,7 +49,7 @@ static class DummyJsonApi {
   }
   
   static getMatrixSpecialMoves(query = [:]) {
-    log.debug "DummyJsonApi getMatrixSpecialMoves: ${query}"
+    log.debug("DummyJsonApi getMatrixSpecialMoves: ${query}")
     def rtn = SPECIAL_MOVES
     if (query.filmId) {
       
