@@ -43,7 +43,15 @@ public class DummyJsonApi {
     log.debug("DummyJsonApi getMatrixCharacters: ${query}")
     def rtn = CHARACTERS
     if (query.filmId) {
-      rtn = rtn?.findResults { it.films?.find{it?.toString()?.equals(query.filmId?.toString())}}
+      rtn = rtn?.findResults { character ->
+        if(character.films?.find { film ->
+          if(film?.toString()?.equals(query.filmId?.toString())) {
+            return true
+          }
+        }) {
+          return character
+        }
+      }
     }
     return toJSON(rtn)
   }
@@ -52,10 +60,22 @@ public class DummyJsonApi {
     log.debug("DummyJsonApi getMatrixSpecialMoves: ${query}")
     def rtn = SPECIAL_MOVES
     if (query.filmId) {
-      
+      rtn = rtn?.findResults { move ->
+        if(move.films?.find { film ->
+          if(film?.toString()?.equals(query.filmId?.toString())) {
+            return true
+          }
+        }) {
+          return move
+        }
+      }
     }
     if (query.characterId) {
-      
+      rtn = rtn?.findResults { move ->
+        if(move?.character?.toString()?.equals(query.characterId?.toString())) {
+          return move
+        }
+      }
     }
     return toJSON(rtn)
   }

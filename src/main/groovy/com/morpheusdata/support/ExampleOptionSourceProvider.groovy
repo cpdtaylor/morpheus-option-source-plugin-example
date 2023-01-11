@@ -51,12 +51,20 @@ class ExampleOptionSourceProvider implements OptionSourceProvider {
 	
 	def matrixCharacters(args) {
 		log.debug("ExampleOptionSourceProvider matrixCharacters: ${args}")
-		return this.parseJSON(DummyJsonApi.getMatrixCharacters())
+		if(args?."config.matrixFilm") {
+			return this.parseJSON(DummyJsonApi.getMatrixCharacters([filmId: args."config.matrixFilm"]))
+		} else {
+			return [] //don't waste a "http REST API" call unless user has selected a film
+		}
 	}
 	
 	def matrixSpecialMoves(args) {
 		log.debug("ExampleOptionSourceProvider matrixSpecialMoves: ${args}")
-		return this.parseJSON(DummyJsonApi.getMatrixCharacters())
+		if(args?."config.matrixFilm" && args?."config.matrixCharacter") {
+			return this.parseJSON(DummyJsonApi.getMatrixSpecialMoves([filmId: args."config.matrixFilm", characterId: args?."config.matrixCharacter"]))
+		} else {
+			return [] //don't waste a "http REST API" call unless user has selected a film and character
+		}
 	}
 	
 	private parseJSON(json) {
