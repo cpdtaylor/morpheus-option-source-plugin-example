@@ -41,7 +41,7 @@ class ExampleOptionSourceProvider implements OptionSourceProvider {
 
 	@Override
 	List<String> getMethodNames() {
-		return new ArrayList<String>(['matrixFilms', 'matrixCharacters', 'matrixSpecialMoves'])
+		return new ArrayList<String>(['matrixFilms', 'matrixCharacters', 'matrixSpecialMoves',"nonDependentMatrixCharacters","nonDependentMatrixSpecialMoves"])
 	}
 	
 	def matrixFilms(args) {
@@ -65,6 +65,14 @@ class ExampleOptionSourceProvider implements OptionSourceProvider {
 		} else {
 			return [] //don't waste a "http REST API" call unless user has selected a film and character
 		}
+	}
+	
+	def nonDependentMatrixCharacters(args) {
+		return this.parseJSON(DummyJsonApi.getMatrixCharacters())
+	}
+	
+	def nonDependentMatrixSpecialMoves(args) {
+		return this.parseJSON(DummyJsonApi.getMatrixSpecialMoves())
 	}
 	
 	private parseJSON(json) {
