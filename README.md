@@ -2,7 +2,7 @@
 
 An example Option Source Plugin intended to demonstrate the power of using option source plugins within Morpheus
 
-A video explanation for the plugin can be found here: uploading soon..
+A video explanation for the plugin can be found here: https://d.pr/v/TBXrqM
 
 Please feel free to extend/add-to this plugin via pull requests.
 
