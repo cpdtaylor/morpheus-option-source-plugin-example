@@ -41,7 +41,7 @@ class ExampleOptionSourceProvider implements OptionSourceProvider {
 
 	@Override
 	List<String> getMethodNames() {
-		return new ArrayList<String>(['matrixFilms', 'matrixCharacters', 'matrixSpecialMoves',"nonDependentMatrixCharacters","nonDependentMatrixSpecialMoves"])
+		return new ArrayList<String>(['matrixFilms', 'matrixCharacters', 'matrixSpecialMoves', 'matrixCharactersFromName', 'nonDependentMatrixCharacters','nonDependentMatrixSpecialMoves'])
 	}
 	
 	def matrixFilms(args) {
@@ -65,6 +65,29 @@ class ExampleOptionSourceProvider implements OptionSourceProvider {
 		} else {
 			return [] //don't waste a "http REST API" call unless user has selected a film and character
 		}
+	}
+	
+	/**
+	* Example of multiple API requests per option list
+	**/
+	def matrixCharactersFromName(args) {
+		log.debug("ExampleOptionSourceProvider matrixCharactersFromName: ${args}")
+		def results = []
+		def characters = []
+		//only do API requests of there is a specified name and the name is long enough
+		if(args?."config.matrixFilmName" && args?."config.matrixFilmName"?.toString()?.length() > 4) {
+			def filmIds = this.parseJSON(DummyJsonApi.getMatrixFilms(args?."config.matrixFilmName")) //get film IDs that match the name
+			filmIds.each { filmMap ->
+				def foundCharacters = this.parseJSON(DummyJsonApi.getMatrixCharacters([filmId: filmMap.id])) //build up list of characters
+				foundCharacters?.each { newCharacter ->
+					if(!characters?.find {existingCharacter -> existingCharacter.id == newCharacter.id}) {
+						characters << newCharacter
+						results << ['name': newCharacter?.name, 'value': newCharacter?.id] //format for translation script
+					}
+				}
+			}
+		}
+		return results 
 	}
 	
 	def nonDependentMatrixCharacters(args) {

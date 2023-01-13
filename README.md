@@ -2,7 +2,8 @@
 
 An example Option Source Plugin intended to demonstrate the power of using option source plugins within Morpheus
 
-A video explanation for the plugin can be found here: https://d.pr/v/TBXrqM
+The first video explanation for the plugin can be found here: https://d.pr/v/TBXrqM
+An explanation that goes into more details about how to use multiple API requests per option list can be found here: https://d.pr/v/wOUyXt
 
 Please feel free to extend/add-to this plugin via pull requests.
 

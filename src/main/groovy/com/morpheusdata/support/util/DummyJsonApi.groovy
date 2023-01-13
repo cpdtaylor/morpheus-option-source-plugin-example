@@ -34,6 +34,17 @@ public class DummyJsonApi {
     [id: 10, character: 6, name: "Making keys..", films: [2]],
   ]
   
+  public static getMatrixFilms(String name) {
+    log.debug("DummyJsonApi getMatrixFilm: ${name}")
+    def rtn = MATRIX_FILMS
+    rtn = rtn.findResults { film ->
+      if (film?.title?.toLowerCase()?.contains(name?.toLowerCase())) {
+        return film
+      }
+    }
+    return toJSON(rtn)
+  }
+  
   public static getMatrixFilms(query = [:]) {
     log.debug("DummyJsonApi getMatrixFilms: ${query}")
     return toJSON(MATRIX_FILMS)
